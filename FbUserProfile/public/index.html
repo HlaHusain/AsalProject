@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app= "myFbApp">
+<head >
+    <title>All FB Users</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <!--<link rel="stylesheet" href="bootstrap/bootstrap.min.css">-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src= "controllers/controller.js"></script>
+
+</head>
+
+<body>
+
+
+<div class= "container" ng-controller= "AppCtrl">
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form> <br>
+    <table class="table">
+        <thead>
+
+
+        <tr>
+
+            <th ng-click="sort('name')">Name
+                <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('email')" >Email
+                <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('number')" >Phone Number
+                <span class="glyphicon sort-icon" ng-show="sortKey=='number'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th>&nbsp;<em class="fa fa-cog"></em></th>
+        </tr>
+
+        <tr>
+            <td><input  class="form-control" ng-model="user.name" placeholder="User Name"></td>
+            <td><input class="form-control" ng-model="user.email" placeholder="Email"></td>
+            <td><input class="form-control" ng-model="user.number" placeholder="Phone Number"></td>
+            <td><button class="btn btn-primary" ng-click="addUser()"><em class="fa fa-plus-circle"></em></button>
+                <button class="btn btn-info" ng-click="update()"><em class="fa fa-pencil"></em></button>&nbsp;
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+        <tr class  dir-paginate="user in userlist | orderBy:sortKey:reverse |  filter:search | itemsPerPage:5 ">
+
+            <td><a href="/profile.html"  >{{user.name}}</a></td>
+            <td>{{user.email}}</td>
+            <td>{{user.number}}</td>
+            <td><button class="btn btn-danger" ng-click="remove(user._id)"><em class="fa fa-trash"></em></button>
+                <button class="btn btn-info" ng-click="edit(user._id)"><em class="fa fa-pencil"></em></button></td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <dir-pagination-controls
+            max-size="7"
+            direction-links="true"
+            boundary-links="true">
+    </dir-pagination-controls>
+</div>
+
+<script src="lib/dirPagination.js"></script>
+</body>
+
+
+
+</html>
